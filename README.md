@@ -6,7 +6,7 @@
 
 2. Wrangling the Billboard Top 100
 
-https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/2.%20Wrangling%20the%20Billboard%20Top%20100.ipynb
+   https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/2.%20Wrangling%20the%20Billboard%20Top%20100.ipynb
 
 4. Visual story telling part 1: green buildings
 
