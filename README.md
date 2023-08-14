@@ -16,7 +16,7 @@
 
 5. Clustering and dimensionality reduction:
 
-6. Market segmentation
+6. Market segmentation:
 
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
