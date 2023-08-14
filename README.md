@@ -12,18 +12,20 @@
 
 3. Visual story telling part 1: green buildings
 
-4. Visual story telling part 2: Capital Metro data
+   https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/3.%20Data%20Visualization%20Part1%20-%20GreenBuilding%20Analysis.Rmd
 
-5. Clustering and dimensionality reduction:
+5. Visual story telling part 2: Capital Metro data
 
-6. Market segmentation:
+6. Clustering and dimensionality reduction:
+
+7. Market segmentation:
 
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
-7. The Reuters corpus
+8. The Reuters corpus
 
-8. Association rule mining
+9. Association rule mining
 
-9. Image classification with neural networks
+10. Image classification with neural networks
 
     https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/9.%20Image%20Classification%20with%20Neural%20Networks.ipynb
