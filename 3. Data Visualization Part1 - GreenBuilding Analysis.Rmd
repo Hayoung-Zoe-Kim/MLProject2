@@ -1,0 +1,256 @@
+---
+title: "greenbuildings_analysis"
+author: "Meenakshi Sundaram (UT EID ms88544), Anisha Singh(UT EID as229583),Antra Sinha(UT EID as224589),Hayong Kim(UT EID hk26786)"
+date: "2023-08-08"
+output:
+  html_document: default
+---
+
+**Q3 : Visual story telling part 1: Green Buildings:**
+
+```{r,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(mosaic)
+library(ggplot2)
+library(viridis)
+library(kableExtra)
+library(plotly)
+
+data <- read.csv("C:\\Users\\kowsh\\OneDrive\\Documents\\greenbuildings.csv",header=TRUE)
+
+data$green_rating=factor(data$green_rating)
+data$class_a=factor(data$class_a)
+
+summary_table <- data %>% 
+  group_by(green_rating,class_a) %>% 
+  summarize(n_pct =round((n()/nrow(data))*100,3), 
+            Med_Rent = median(Rent),
+            Med_occupancy_rate=median(leasing_rate),
+            Med_age=median(age)) %>% 
+  arrange(desc(Med_Rent)) 
+
+#formating the table using kableExtra library
+format_summary_table <- summary_table%>% 
+  kable(format="html",escape=FALSE) %>% 
+  kable_styling(full_width=FALSE) %>% 
+  row_spec(1,background = "#FFFF99")
+
+format_summary_table
+
+#formatting the table for plotting a horizontal bar chart
+summary_data_long <- summary_table %>%
+  pivot_longer(cols = c(Med_Rent, Med_age, Med_occupancy_rate),
+               names_to = "variable",
+               values_to = "value")
+
+p <- ggplot(summary_data_long, aes(x = interaction(green_rating, class_a), y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = value), position = position_dodge(width = 1),hjust=1.1, vjust = 0.5, color = "black") +
+  labs(
+    x = "Green Rating & Class A",
+    y = "Values",
+    title = "Median Rent, Median Age, and Median Occupancy by Green Rating and Class A"
+  ) +
+scale_fill_manual(values = c(
+    "Med_Rent" = "#66c2a5",
+    "Med_age" = "#fc8d62",
+    "Med_occupancy_rate" = "#8da0cb")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  coord_flip()
+
+p
+
+green_color <- "#1B9E77"  #color for green buildings
+non_green_color <- "#D95F02"  #color for non-green buildings
+
+
+#creating faceted histogram for green_rating by class
+ggplot(data)+
+  geom_bar(aes(x=green_rating,fill=class_a))+
+  scale_fill_brewer(type="qual")+
+  facet_wrap(~class_a)+
+  geom_text(aes(x = green_rating, label = scales::percent(..count../sum(..count..))),hjust=0.4,
+  stat = "count",
+  position = position_stack(vjust = 0.9),
+  show.legend = FALSE,
+  size = 3)
+
+#visualizing the data to identify confounding variables affecting rent
+
+#scatter plot of size vs rent
+ggplotly(ggplot(data)+
+  geom_point(aes(x=size, y=Rent,color=green_rating),alpha=0.7)+
+  scale_color_manual(values=c(non_green_color,green_color))+
+  labs(x="Size in sqft",
+       y="Rent in $/sqft",
+       title="Size Vs Rent",
+       colour ="Is_green_building"))
+
+
+#scatter plot of cluster rent vs rent
+ggplotly(ggplot(data)+
+  geom_point(aes(x=cluster_rent,y=Rent,color=green_rating),alpha=0.7)+
+ scale_color_manual(values=c(non_green_color,green_color))+
+  labs(x="Cluster Rent ($/sqft)",
+       y="Rent ($/sqft)",
+       title="Cluster Rent vs Rent",
+       colour="Is_green_building"))
+
+#box plot of class vs age by green_rating
+ggplot(data)+
+  geom_boxplot(aes(x=class_a,y=age,color=green_rating))+
+  labs(x="Is_Class_A",
+       y="Age of Building in Yrs",
+       title="Box plot of Class vs Age by green_rating",
+       colour="Is_green_building")+
+  scale_color_viridis(discrete=T)
+
+
+#age vs rent
+
+ggplotly(ggplot(data)+
+  geom_point(aes(x=age,y=Rent,color=green_rating),alpha=0.7)+
+  scale_color_manual(values=c(non_green_color,green_color))+
+  labs(x="Age in Years",
+       y="Rent in $/Sqft",
+       title=" Age vs Rent",
+       colour="Is_green_building"))
+
+
+#age vs rent faceted by class of buildings
+
+
+ggplot(data,aes(x=age, y=Rent,color=class_a),alpha=0.6)+
+  geom_point(aes(shape=class_a),alpha=0.7)+
+  facet_wrap(~green_rating,labeller = labeller(green_rating = c("1" = "Green Buildings ", "0" = "Non-Green Buildings")))+
+ scale_color_manual(values=c(non_green_color,green_color))
+  
+
+```
+Observations : 
+
+* Rent is positively correlated with size 
+
+* Cluster rent and rent are positively correlated
+
+* Green class A buildings are younger, have a higher rent and occupancy rate than other buildings
+
+* Most of the class A buildings are younger, but irrespective of their age, they have a higher rent per sqft because of their premium building quality/market positioning
+
+*The proportion of class A buildings is higher for green buildings. ~80% of the green buildings are class A buildings. 
+
+* Also, the rent for class_a buildings are substantially higher than that of non-class_a buildings (~$4.8/sqft)
+
+* There is no correlation between age and rent. Hence, we will exclude this variable from our analysis
+
+
+```{r,message=FALSE,warning=FALSE}
+
+library(plotly)
+
+green_color <- "#1B9E77"  # Color for green buildings
+non_green_color <- "#D95F02"  # Color for non-green buildings
+
+
+size_bins <- seq(0, 2000000, by = 50000)
+
+# Create bins using cut() function
+data$size_groups <- cut(data$size, breaks = size_bins, labels = FALSE, right = FALSE)
+
+clean_data=na.omit(data)
+
+#density histogram of size
+
+ggplotly(ggplot(clean_data) +
+  geom_density(aes(x=size_groups,fill=green_rating),alpha=0.6)+
+  facet_wrap(~class_a,labeller = labeller(class_a = c("1" = "Class A Buildings ", "0" = "Non- Class A Buildings")))+
+    labs(x="size groups of width 50k sqft",
+         y="Density of buildings for each size_group",
+         title="Density histogram of sise groups",
+         colour="Is_green_rating"))
+
+
+
+Median <- clean_data %>% group_by(size_groups,green_rating,class_a) %>% summarize(n=n(),Med_rent=median(Rent,na.rm=TRUE))
+
+
+plot <- ggplot(Median)+
+  geom_line(aes(x=size_groups,y=Med_rent,color=green_rating),size=1.2)+
+  facet_wrap(~class_a,labeller=labeller(class_a=c("1"="Class A Buildings","0"="Non-Class A Buildings")))+
+    scale_color_manual(values=c(non_green_color,green_color))+
+  scale_x_continuous(breaks=seq(2,40,by=2),labels = seq(2,40,by=2))+
+  labs(x="Size Groups of Width 100k Sqft",
+       y="Median Rent per Size Group in $/sqft",
+       title = "Size Vs Rent by Green_rating and Class_a",
+       colour="Is_green_building")+
+  theme(axis.text.x=element_text(angle=45,hjust=1))
+
+interactive_plot <- ggplotly(plot)
+
+interactive_plot
+
+Result_table <- 
+  clean_data %>% 
+  filter(size_groups==6) %>% 
+  group_by(size_groups,green_rating,class_a) %>% 
+  summarize(Med_rent=round(median(Rent),2),
+            Med_occupancy = round(median(leasing_rate),1),
+            Min_size=min(size)) %>% 
+  arrange(desc(Med_rent))
+
+  Format_Result_table <- Result_table %>%
+    kable(format="html",escape=FALSE) %>% 
+    kable_styling(full_width=FALSE) %>% 
+    row_spec(c(1),background = "#FFFF99") %>% 
+    row_spec(c(2),background = "#FF9999")
+  
+  Format_Result_table
+  
+  
+
+```
+Insights: 
+
+
+* There seems to be an almost similar size distribution for both green and non-green buildings within the same class. Hence, we could use these splits to study the trend of median rent in these groups. 
+
+*It is not advisable to invest in green buildings if its not a class a building as the rent is lower in this case when compared non-green buildings
+
+*For a green, class A building of size between 250000 and 350000 sq ft, the median rents are higher than that of its non-green class A counterparts.  
+
+
+Will investing in green buildings be worth it? 
+
+Baseline construction costs + green rating premium = $105,000,000 
+
+
+Baseline construction cost/sqft = $100 M/250K sqft =$400/sqft
+
+Hence, going for bigger size buildings will increase the bottom line by a substantial margin and we therefore eliminate going for green, class A buildings of size 300k to 350k (group 7) from our recommendations. 
+
+
+***Final Recommendation : Building a green, class A building of size 250k to 300k sqft (Size Group 6)***
+
+Assuming median occupancy, median rent = $32/sqft
+
+Diff between non-green and green class A in this size group = $32-$29 =$3/sqft
+
+=> Minimum additional revenue per year = 3*250000 = $750,000 (Ensures no addditional cost incurred in baseline construction)
+
+Given that we spend an extra 5 million dollars for the green building,with a median occupancy rate of 93.9% for 250,000 sqft green, class A building, we will be able to recuperate this cost by 7.099 years. 
+
+
+But assuming an occupancy rate of ~94% might be far from reality, as the residential real estate industry thrives from the word-of-mouth and reviews of existing/old tenants. Hence, we take a level based approach of assuming 80% occupancy for first 3 years and 90% from year 3 onward and also, we consider a conservative estimate of 15% inflation rate for difference in rent after 3 years.  
+
+This implies, in first 3 years...
+
+Additional Revenue = 3*250000*0.8 = $600,000/year
+
+After the first 3 years, we expect the diff in rent/per sqft to go up by 15% and occupancy to be 90%.
+
+Additional Revenue= 3.45*250000*0.9= $776,250/year
+
+
+Even with these conservative assumptions for occupancy rate, we will be able recuperate the costs in 7.123 years.  
+
