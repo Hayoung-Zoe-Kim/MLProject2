@@ -4,7 +4,7 @@
 
 1. Probability practice
 
-https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/1.%20Probability_practice.ipynb
+   https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/1.%20Probability_practice.ipynb
    
 2. Wrangling the Billboard Top 100:
 
