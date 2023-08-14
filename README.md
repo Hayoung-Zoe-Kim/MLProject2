@@ -24,8 +24,10 @@
 
 8. The Reuters corpus
 
-9. Association rule mining
+   https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/7.%20The%20Reuters%20corpus.ipynb
 
-10. Image classification with neural networks
+10. Association rule mining
+
+11. Image classification with neural networks
 
     https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/9.%20Image%20Classification%20with%20Neural%20Networks.ipynb
