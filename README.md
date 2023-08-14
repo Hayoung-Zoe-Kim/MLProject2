@@ -14,7 +14,7 @@
 
 5. Visual story telling part 2: Capital Metro data
 
-6. Clustering and dimensionality reduction
+6. Clustering and dimensionality reduction:
   
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
