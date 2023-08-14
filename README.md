@@ -6,22 +6,22 @@
 
    
 
-3. Wrangling the Billboard Top 100:
+2. Wrangling the Billboard Top 100:
    
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/2.%20Wrangling%20the%20Billboard%20Top%20100.ipynb
 
-4. Visual story telling part 1: green buildings
+3. Visual story telling part 1: green buildings
 
-5. Visual story telling part 2: Capital Metro data
+4. Visual story telling part 2: Capital Metro data
 
-6. Clustering and dimensionality reduction:
-  
+5. Clustering and dimensionality reduction:
+
+6. Market segmentation
+
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
-9. Market segmentation
+7. The Reuters corpus
 
-10. The Reuters corpus
+8. Association rule mining
 
-11. Association rule mining
-
-12. Image classification with neural networks
+9. Image classification with neural networks
