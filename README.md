@@ -1,5 +1,5 @@
 # STA 380, Part 2: Exercises
-### Group : Anisha Singh (as229583), Antra Sinha (as224589), Hayoung Kim (hk26786), Meenakshi Sundaram (ms88544)
+### Anisha Singh (as229583), Antra Sinha (as224589), Hayoung Kim (hk26786), Meenakshi Sundaram (ms88544)
 
 1. Probability practice
 
