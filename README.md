@@ -25,3 +25,5 @@
 8. Association rule mining
 
 9. Image classification with neural networks
+
+    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/9.%20Image%20Classification%20with%20Neural%20Networks.ipynb
