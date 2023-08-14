@@ -7,6 +7,7 @@
    
 
 2. Wrangling the Billboard Top 100:
+
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/2.%20Wrangling%20the%20Billboard%20Top%20100.ipynb
 
 3. Visual story telling part 1: green buildings
@@ -16,6 +17,7 @@
 5. Clustering and dimensionality reduction:
 
 6. Market segmentation:
+
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
 7. The Reuters corpus
