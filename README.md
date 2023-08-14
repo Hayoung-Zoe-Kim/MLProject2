@@ -18,11 +18,13 @@
 
 6. Clustering and dimensionality reduction:
 
-7. Market segmentation:
+   https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/5.%20Clustering_%26_Dimensionality_reduction.ipynb
+
+8. Market segmentation:
 
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/6.%20Market%20Segmentation.ipynb
 
-8. The Reuters corpus
+9. The Reuters corpus
 
    https://github.com/Hayoung-Zoe-Kim/MLProject2/blob/main/7.%20The%20Reuters%20corpus.ipynb
 
